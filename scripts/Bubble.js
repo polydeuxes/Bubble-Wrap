@@ -303,5 +303,6 @@ export default class Bubble {
   parsePastedContent(plaintext) {
     const filteredText = Parser.filter(plaintext);
     Parser.appendAsBubbles(filteredText, this);
+    this.inputHandler();
   }
 }
