@@ -302,7 +302,16 @@ export default class Bubble {
 
   parsePastedContent(plaintext) {
     const filteredText = Parser.filter(plaintext);
-    Parser.appendAsBubbles(filteredText, this);
+    const lines = filteredText.split(/\r?\n/);
+    const maxLines = BubbleManager.type.lineCount;
+    if (lines.length > maxLines) {
+      for (let i = 0; i < lines.length; i += maxLines) {
+        const chunk = lines.slice(i, i + maxLines).join('\n');
+        Parser.appendAsBubbles(chunk, this);
+      }
+    } else {
+        Parser.appendAsBubbles(filteredText, this);
+    }
     this.inputHandler();
   }
 }
